@@ -10,4 +10,8 @@ func main() {
 	hand.saveToFile("foo")
 
 	cards, _ = newDeckFromFile("foo")
+
+	hand.print()
+	hand = hand.shuffle()
+	hand.print()
 }
