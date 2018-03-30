@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"strings"
+	"time"
 )
 
 // Create a new type of 'deck',
@@ -27,8 +28,8 @@ func newDeck() deck {
 }
 
 func (d deck) print() {
-	for _, card := range d {
-		fmt.Println(card)
+	for i, card := range d {
+		fmt.Println(i, card)
 	}
 
 }
@@ -48,7 +49,10 @@ func (d deck) saveToFile(path string) error {
 }
 
 func (d deck) shuffle() deck {
-	rand.Shuffle(len(d), func(i, j int) {
+	src := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(src)
+
+	r.Shuffle(len(d), func(i, j int) {
 		d[i], d[j] = d[j], d[i]
 	})
 	return d
