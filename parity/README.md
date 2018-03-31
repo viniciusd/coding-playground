@@ -1,4 +1,4 @@
-# sli-monitor
+# Parity
 
 *Know whether which value from 0 to 10 is even or odd!*
 
