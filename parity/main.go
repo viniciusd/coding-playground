@@ -1,7 +1,7 @@
 package main
 
 func main() {
-	s := newSeq(11, 1, -1)
+	s := newSeq(0, 11, 1)
 
 	s.printParity()
 }
