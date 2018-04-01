@@ -29,7 +29,7 @@ func TestSaveToDeckAndNewDeckFromFile(t *testing.T) {
 
 	loadedDeck, _ := newDeckFromFile("_decktesting")
 
-	for i, _ := range deck {
+	for i := range deck {
 		if deck[i] != loadedDeck[i] {
 			t.Errorf("Expected the %d-th card to be %s", i, deck[i])
 		}

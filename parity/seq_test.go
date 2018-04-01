@@ -12,7 +12,7 @@ func TestNewSeq_whenAskedForAIncreasingSequence(t *testing.T) {
 		t.Errorf("Expected sequence length of 10, but got %d", len(s))
 	}
 
-	for i, _ := range s {
+	for i := range s {
 		if i == 0 {
 			if s[i] != start {
 				t.Errorf("Expected %d-th value of %d, but got %d", i, start, s[0])
@@ -38,7 +38,7 @@ func TestNewSeq_whenAskedForADecreasingSequence(t *testing.T) {
 		t.Errorf("Expected sequence length of 10, but got %d", len(s))
 	}
 
-	for i, _ := range s {
+	for i := range s {
 		if i == 0 {
 			if s[i] != start {
 				t.Errorf("Expected %d-th value of %d, but got %d", i, start, s[0])
