@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -15,12 +13,12 @@ func main() {
 		os.Exit(1)
 	}
 	filePath := os.Args[1]
-	bs, err := ioutil.ReadFile(filePath)
+	f, err := os.Open(filePath)
 
 	if err != nil {
 		fmt.Println("Error reading file: ", filePath)
-		os.Exit(1)
+		os.Exit(2)
 	}
 
-	io.Copy(os.Stdout, bytes.NewReader(bs))
+	io.Copy(os.Stdout, f)
 }
