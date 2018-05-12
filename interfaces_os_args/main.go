@@ -7,18 +7,22 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		fmt.Println("The must be one and only one argument indicating",
-			"the name of the file that will be displayed")
-		os.Exit(1)
-	}
-	filePath := os.Args[1]
-	f, err := os.Open(filePath)
-
-	if err != nil {
-		fmt.Println("Error reading file: ", filePath)
-		os.Exit(2)
+	if len(os.Args) == 1 {
+		io.Copy(os.Stdout, os.Stdin)
+		return
 	}
 
-	io.Copy(os.Stdout, f)
+	for _, input := range os.Args[1:] {
+		if input == "-" {
+			io.Copy(os.Stdout, os.Stdin)
+			continue
+		}
+
+		f, err := os.Open(input)
+		if err != nil {
+			fmt.Println("Error reading file: ", input)
+			os.Exit(1)
+		}
+		io.Copy(os.Stdout, f)
+	}
 }
