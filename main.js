@@ -1,4 +1,4 @@
-(async (global) => {
+(async (global, wasmWrapper) => {
     function wasmFactory(id) {
         let tempContext = {
             Module: {
@@ -22,16 +22,16 @@
         Module.postRun = (Module.postRun || []).concat([
             _resolve.bind(promise, Module)
         ]); 
-        ${await (await fetch('hello.js')).text()};
+        ${await (await fetch(wasmWrapper)).text()};
         return promise; 
     `);
 
-})(window);
+})(window, 'hello.js');
 
 var hello1, hello2;
 
 function click1() {
-    if (typeof hello1 === 'undefined') {
+    if (typeof hello1 === "undefined") {
         wasmFactory(1).then(m => hello1 = m);
     } else {
         hello1._hello()
@@ -39,8 +39,8 @@ function click1() {
 }
 
 function click2() {
-    if (typeof hello2 === 'undefined') {
-        wasmFactory(1).then(m => hello2 = m);
+    if (typeof hello2 === "undefined") {
+        wasmFactory(2).then(m => hello2 = m);
     } else {
         hello2._hello()
     }
