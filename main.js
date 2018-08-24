@@ -1,17 +1,17 @@
-async function moduleFactory() { 
+async function moduleFactory(id) {
 
     var wasmWrapper = await (await fetch('hello.js')).text();
 
-    let tempContext = Object.assign(new (function _thisContext() {})(), {
+    let tempContext = {
         Module: {
             print: function() {
                 let text = Array.prototype.slice.call(arguments).join(' ');
-                console.log(text);
+                console.log(id, text);
                 document.getElementById("result").innerHTML += "<br>\n" + text;
             },
             printErr: console.error
-        } 
-    });
+        }
+    };
 
     (function(str) {
       return eval('var Module = this.Module;'+str);
@@ -21,8 +21,8 @@ async function moduleFactory() {
 }
 
 var hello1, hello2;
-moduleFactory().then((m) => hello1 = m);
-moduleFactory().then((m) => hello2 = m);
+moduleFactory(1).then((m) => hello1 = m);
+moduleFactory(2).then((m) => hello2 = m);
 
 function click1() {
     hello1._hello()
