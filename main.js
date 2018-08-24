@@ -15,7 +15,6 @@
 
     global.wasmFactory = wasmFactory;
 
-    let wasmWrapper = await (await fetch('hello.js')).text();
     let loadWasm = new Function(`
         var Module = this.Module;
         let _resolve;
@@ -23,7 +22,7 @@
         Module.postRun = (Module.postRun || []).concat([
             _resolve.bind(promise, Module)
         ]); 
-        ${wasmWrapper};
+        ${await (await fetch('hello.js')).text()};
         return promise; 
     `);
 
