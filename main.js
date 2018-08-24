@@ -1,15 +1,14 @@
-(async (window) => { 
+async function moduleFactory() { 
+
     var wasmWrapper = await (await fetch('hello.js')).text();
 
-    let tempContext = Object.assign(new (function x() {})(), {
+    let tempContext = Object.assign(new (function _thisContext() {})(), {
         Module: {
-            print: (function() {
-                return function(text) {
-                    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-                    console.log(text);
-                    document.getElementById("result").innerHTML += "<br>\n" + text;
-                };
-            })(),
+            print: function() {
+                let text = Array.prototype.slice.call(arguments).join(' ');
+                console.log(text);
+                document.getElementById("result").innerHTML += "<br>\n" + text;
+            },
             printErr: console.error
         } 
     });
@@ -18,14 +17,17 @@
       return eval('var Module = this.Module;'+str);
     }.call(tempContext, wasmWrapper));
 
-    window.hello = tempContext.Module
-})(window)
+    return tempContext.Module;
+}
 
+var hello1, hello2;
+moduleFactory().then((m) => hello1 = m);
+moduleFactory().then((m) => hello2 = m);
 
 function click1() {
-    hello._hello()
+    hello1._hello()
 }
 
 function click2() {
-    hello._hello()
+    hello2._hello()
 }
