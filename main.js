@@ -32,7 +32,7 @@ var hello1, hello2;
 
 function click1() {
     if (typeof hello1 === "undefined") {
-        wasmFactory(1).then(m => (hello1 = m)._hello());
+        wasmFactory(1).then(Object.assign.bind(null, hello1 = {}));
     } else {
         hello1._hello()
     }
